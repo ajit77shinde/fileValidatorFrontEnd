@@ -1,0 +1,91 @@
+:root {
+  --line-col: rgb(65, 65, 65);
+  --row-bg: #96d4d466;
+}
+
+tr:nth-child(even) {
+  background-color: var(--row-bg);
+}
+
+tr {
+  outline: 1px solid var(--line-col);
+
+}
+
+
+td:not(:last-child),
+th:not(:last-child) {
+  border-right: solid 1px var(--line-col);
+}
+
+td,
+th {
+  padding: 5px 10px;
+}
+
+.logOutButton {
+  color: #fff;
+  font-size: 1.25rem;
+  border-radius: 8px;
+  outline: none;
+  cursor: pointer;
+  width: fit-content;
+  margin-left: auto;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  padding: 30px
+}
+
+.tableWraper {
+  margin: 1rem;
+}
+
+.file-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.info-container {
+  display: flex;
+}
+.error-logs{
+  color: red;
+}
+.erro-wraper{
+  margin: 1rem;
+}
+
+.table {
+  font-size: 12px;
+  display: block;
+  overflow-x: auto;
+}
+
+.uploadButton {
+  margin-bottom: 30px;
+  margin-left: 20px;
+}
+
+.uploadPanel {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+.info__remove {
+  margin-left: 20px;
+}
+
+.headerTitle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30px;
+  font-style: italic;
+}
+.error{
+  background: red;
+}
