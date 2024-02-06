@@ -1,6 +1,15 @@
+/* :root {
+  --line-col: rgb(65, 65, 65);
+  --row-bg: #96d4d466;
+} */
+
 :root {
   --line-col: rgb(65, 65, 65);
   --row-bg: #96d4d466;
+}
+
+body {
+  background: linear-gradient(135deg, #ebd4be 0%, #e6e6e6 100%);
 }
 
 tr:nth-child(even) {
@@ -33,11 +42,16 @@ th {
   margin-left: auto;
 }
 
+
 .header {
   display: flex;
   justify-content: space-between;
-  padding: 30px
+  align-items: center; /* Center items vertically */
+  padding: 30px;
 }
+
+
+
 
 .tableWraper {
   margin: 1rem;
@@ -80,11 +94,13 @@ th {
 }
 
 .headerTitle {
+  flex: 1; /* Take up remaining space */
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 30px;
   font-style: italic;
+  font-weight: bold;
 }
 .red{
   background: red;
