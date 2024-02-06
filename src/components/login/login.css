@@ -1,4 +1,4 @@
-
+/* 
 .login {
     width: 400px;
     background: #fff;
@@ -10,7 +10,20 @@
     text-align: center;
     margin: auto;
     margin-top: 3rem;
-}
+} */
+
+.login {
+    width: 400px;
+    background: #fff;
+    border: 1px solid #dddfe2;
+    border-radius: 8px;
+    padding: 1rem;
+    align-items: center;
+    text-align: center;
+    margin: auto;
+    margin-top: 3rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
 
 .login > input {
     border-radius: 8px;

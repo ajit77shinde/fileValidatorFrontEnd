@@ -3,3 +3,18 @@
     display: flex;
     padding: 30px
 }
+
+
+body, h1, h2, h3, h4, h5, h6, p, input, button, .button, .login, .register {
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  strong, b {
+    font-weight: bold;
+  }
+  
+  .normal-text {
+    font-weight: normal;
+  }
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap');
