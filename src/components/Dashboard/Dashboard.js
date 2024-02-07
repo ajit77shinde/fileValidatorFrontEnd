@@ -20,7 +20,7 @@ export default function Dashboard({ setLoginUser }) {
       "FIRST NAME*             (No punctuation)":"string",
       "M/I":"string",
       "Suffix":"string",
-      "DATE OF\nBIRTH*\n(yyyymmdd)":"date",
+      "DATE OF\nBIRTH*\n(yyyymmdd)":"number",
       "MOBILE PHONE \n(no hypens)":"number",
       "HOME PHONE\n(no hyphens)":"number",
       "Work Phone\n(No hyphens)":"number",
@@ -28,37 +28,37 @@ export default function Dashboard({ setLoginUser }) {
       "GENDER*\n(M / F)":"string",
       "Subscriber SSN*":"number",
       "MEMBER SSN \n(no hyphens)":"number",
-      "MAILING ADDRESS LINE 1*                              (No punctuation)":"number",
-      "MAILING ADDRESS LINE 2 (No puctuation)":"number",
-      "CITY*":"number",
-      "STATE*":"number",
+      "MAILING ADDRESS LINE 1*                              (No punctuation)":"string",
+      "MAILING ADDRESS LINE 2 (No puctuation)":"string",
+      "CITY*":"string",
+      "STATE*":"string",
       "ZIP*":"number",
       "Correspondence Addr Ln 1":"string",
       "Correspondence Addr Ln 2":"string",
-      "Correspondence City*":"string",
-      "Correspondence State*":"string",
-      "Correspondence Zip*":"string",
-      "RELATIONSHIP* \n**Must List Employee first:then family members**":"string",
-      "PCP SELECTION*":"string",
-      "MEDICAL PLAN*":"string",
-      "MEDICAL BEGIN DATE*\n(yyyymmdd)":"string",
-      "MEDICAL END DATE*\n(yyyymmdd)":"string",
-      "ACU/CHIRO PLAN*":"string",
-      "ACU/CHIRO BEGIN DATE*\n(yyyymmdd)":"string",
-      "ACU/CHIRO END DATE*\n(yyyymmdd)":"string",
-      "DENTAL PLAN*":"string",
-      "DENTAL BEGIN DATE*\n(yyyymmdd)":"string",
-      "DENTAL END DATE*\n(yyyymmdd)":"string",
-      "VISION PLAN*":"string",
-      "VISION BEGIN DATE*\n(yyyymmdd)":"string",
-      "VISION END DATE*\n(yyyymmdd)":"string",
-      "Infertility Plan":"string",
-      "Infertility Begin Date (yyyymmdd)":"string",
-      "Infertility End Date (yyyymmdd)":"string",
-      "Original Effective Date":"string",
-      "Language":"string",
-      "Existing patient of PCP?\n(not loaded)":"string",
-      "COMMENTS\n(Not loaded into system)":"string"
+      // "Correspondence City*":"string",
+      // "Correspondence State*":"string",
+      // "Correspondence Zip*":"number",
+      // "RELATIONSHIP* \n**Must List Employee first:then family members**":"string",
+      // "PCP SELECTION*":"number",
+      // "MEDICAL PLAN*":"string",
+      // "MEDICAL BEGIN DATE*\n(yyyymmdd)":"number",
+      // "MEDICAL END DATE*\n(yyyymmdd)":"number",
+      // "ACU/CHIRO PLAN*":"number",
+      // "ACU/CHIRO BEGIN DATE*\n(yyyymmdd)":"number",
+      // "ACU/CHIRO END DATE*\n(yyyymmdd)":"number",
+      // "DENTAL PLAN*":"string",
+      // "DENTAL BEGIN DATE*\n(yyyymmdd)":"number",
+      // "DENTAL END DATE*\n(yyyymmdd)":"number",
+      // "VISION PLAN*":"string",
+      // "VISION BEGIN DATE*\n(yyyymmdd)":"number",
+      // "VISION END DATE*\n(yyyymmdd)":"number",
+      // "Infertility Plan":"string",
+      // "Infertility Begin Date (yyyymmdd)":"string",
+      // "Infertility End Date (yyyymmdd)":"number",
+      // "Original Effective Date":"number",
+      // "Language":"string",
+      // "Existing patient of PCP?\n(not loaded)":"string",
+      // "COMMENTS\n(Not loaded into system)":"string"
     }
     
   const handleFileUpload = (results) => {
@@ -67,7 +67,12 @@ export default function Dashboard({ setLoginUser }) {
     function isNumeric(value) {
       return /^-?\d+$/.test(value);
     }
-
+    function isPhoneNumber(value) {
+      return /^\+(?:[0-9] ?){6,14}[0-9]$/.test(value);
+    }
+    function isMail(value) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+    }
     const value = results.data;
     // value[0].push('Error Field');
     //================================Headers validation ======================================
@@ -101,17 +106,20 @@ export default function Dashboard({ setLoginUser }) {
           type = 'string'
         }
         // if (i !== 0) {
-        // console.log('cell =',cell, ",  type = ", type, ", validationHeaders[j][0] = " ,validationHeaders[j][0], ",  validationHeaders[j][1] = " ,validationHeaders[j][1])
-        
-        if (type === validationHeaders[value[0][j]]) {
+        console.log('cell =',cell, ", validationHeaders[value[0][j]] = ", validationHeaders[value[0][j]])
+        if(!cell){
+          valueObjectTemp['errorMessage'] = `Field is Empty`;
+          valueObjectTemp['cssClass'] = 'red';
+
+        }else if (type === validationHeaders[value[0][j]]) {
           errArr.push('noError')
           valueObjectTemp['isError'] = false;
-          valueObjectTemp['errorMessage'] = `Cell type is ${validationHeaders[value[0][j]]}`;
+          // valueObjectTemp['errorMessage'] = `Field is ${validationHeaders[value[0][j]]} format`;
           valueObjectTemp['cssClass'] = 'normal';
         } else {
           errArr.push('error');
           valueObjectTemp['isError'] = true;
-          valueObjectTemp['errorMessage'] = `Cell type is not ${validationHeaders[value[0][j]]}`;
+          valueObjectTemp['errorMessage'] = `Field is not in ${validationHeaders[value[0][j]]} format`;
           valueObjectTemp['cssClass'] = 'red';
 
         }
@@ -205,7 +213,7 @@ export default function Dashboard({ setLoginUser }) {
                       <tr key={i}>
                         {row.map((v, j) => (
                           <td key={j} 
-                          title={v.errorMessage}
+                          title={v.errorMessage? v.errorMessage : '' }
                           // onMouseEnter={v.errorMessage}
                           className={v.cssClass}
                           >{v.value}</td>
