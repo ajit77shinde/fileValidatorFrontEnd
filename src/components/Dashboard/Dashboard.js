@@ -61,6 +61,26 @@ export default function Dashboard({ setLoginUser }) {
       // "COMMENTS\n(Not loaded into system)":"string"
     }
     
+    const handleBlur = (rowIndex, colIndex) => {
+      const updatedValObj = [...valObj];
+      updatedValObj[rowIndex][colIndex].editable = false;
+      setValObj(updatedValObj);
+    };
+
+    const handleChange = (event, rowIndex, colIndex) => {
+      debugger;
+      const newValue = event.target.value;
+      const updatedValObj = [...valObj];
+      updatedValObj[rowIndex][colIndex].value = newValue;
+      setValObj(updatedValObj);
+    };
+
+    const handleEdit = (rowIndex, colIndex) => {
+      debugger;
+      const updatedValObj = [...valObj];
+      updatedValObj[rowIndex][colIndex].editable = true;
+      setValObj(updatedValObj);
+    };
   const handleFileUpload = (results) => {
     let ValueObject = [];
 
@@ -124,7 +144,7 @@ export default function Dashboard({ setLoginUser }) {
 
         }
         // }
-        valueObjectTemp['type'] = type;
+        valueObjectTemp['type'] = validationHeaders[value[0][j]];
         valueObjectTemp['value'] = cell;
 
         return valueObjectTemp;
@@ -208,7 +228,7 @@ export default function Dashboard({ setLoginUser }) {
                         col.map((col, i) => <th key={i}>{col}</th>)}
                     </tr>
                   </thead>
-                  <tbody>
+                  {/* <tbody>
                     {valObj.map((row, i) => (
                       <tr key={i}>
                         {row.map((v, j) => (
@@ -220,7 +240,28 @@ export default function Dashboard({ setLoginUser }) {
                         ))}
                       </tr>
                     ))}
-                  </tbody>
+                  </tbody> */}
+
+<tbody>
+  {valObj.map((row, rowIndex) => (
+    <tr key={rowIndex}>
+      {row.map((v, colIndex) => (
+        <td key={colIndex} title={v.errorMessage ? v.errorMessage : ''} className={v.cssClass} onClick={()=>handleEdit(rowIndex, colIndex)} >
+          {v.editable ? (
+            <input
+              type="text"
+              value={v.value}
+              onChange={(event) => handleChange(event, rowIndex, colIndex)}
+              onBlur={() => handleBlur(rowIndex, colIndex)}
+            />
+          ) : (
+            v.value
+          )}
+        </td>
+      ))}
+    </tr>
+  ))}
+</tbody>
                 </table>
               </div>
             </>
